@@ -1,0 +1,36 @@
+
+  
+  .sidebar-item{
+    padding: .75em 1em;
+    display: block;
+    transition: background-color .15s;
+    border-radius: 5px;
+  }
+
+  .sidebar-title span i{
+    display: inline-block;
+    width: 1.5em;
+  }
+  .sidebar-title .toggle-btn{
+    cursor: pointer;
+    transition: transform .3s;
+  }
+  .sidebar-item.open > .sidebar-title .toggle-btn{
+    transform: rotate(180deg);
+  }
+  .sidebar-content{
+    padding-top: .25em;
+    height: 0;
+    overflow: hidden;
+  }
+  .sidebar-item.open > .sidebar-content{
+    height: auto;
+  }
+  
+  .sidebar-item.plain{
+    color: #fff;
+    text-decoration: none;
+  }
+  .sidebar-item.plain:hover{
+    text-decoration: underline;
+  }

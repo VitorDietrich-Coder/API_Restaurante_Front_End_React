@@ -1,9 +1,13 @@
 {
-  "name": "formulario-cadastro",
+  "name": "api_restaurante_front_end_react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@material-ui/core": "^4.12.1",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -11,6 +15,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
+    "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0",
     "react-scripts": "3.4.3",
     "styled-components": "^6.0.8",

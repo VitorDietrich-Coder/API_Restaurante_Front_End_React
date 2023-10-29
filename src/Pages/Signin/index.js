@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as C from "./styles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 
@@ -27,16 +28,15 @@ const Signin = () => {
         senha,
       });
 
-    const res = signin(email, senha);
+    const res = signin(response.data.token);
 
-    alert('Usuário cadatrado com sucesso!', response);
     navigate("/home");
-    
+
   } catch (error) {
     setError(true);
     console.error('Erro ao enviar dados teste:', error);
   }
-  };
+};
 
   return (
     <C.Container>
