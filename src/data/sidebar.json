@@ -1,77 +1,50 @@
 [
     {
         "title": "Cliente",
-        "icon": "bi-person-fill",
         "childrens": [
             {
                 "title": "Cadastrar Cliente",
                 "path": "/cliente"
-            },
-            {
-                "title": "Listar Clientes",
-                "path": "/listarcliente"
             }
         ]
     },
     {
         "title": "Fornecedores",
-        "icon": "bi-info-circle-fill",
         "childrens": [
             {
                 "title": "Cadastrar Fornecedor",
                 "path": "/fornecedor"
-            },
-            {
-                "title": "Listar Fornecedor",
-                "path": "/register"
-            },
-            {
-                "title": "Forgot Password",
-                "path": "/forgot-password"
-            },
-            {
-                "title": "Reset Password",
-                "path": "/reset-password"
             }
         ]
     },
     {
         "title": "Produtos",
-        "icon": "bi-gear-fill",
         "childrens": [
             {
                 "title": "Cadastrar Produto",
                 "path": "/produto"
-            },
-            {
-                "title": "Listar Produtos",
-                "path": "/listarprodutos"
             }
         ]
     },
     {
         "title": "Pedidos",
-        "icon": "bi-view-list",
         "childrens": [
             {
                 "title": "Cadastrar Pedido",
                 "path": "/pedido"
             },
             {
-                "title": "Adicionar Item Ao Pedido",
-                "path": "/adicionaritem"   
-            },
-            {
-                "title": "Excluir pedido",
-                "path": "/excluirpedido"   
-            },
-            {
-                "title": "Excluir Produto pedido",
-                "path": "/excluirprodutopedido"   
-            },
-            {
                 "title": "Fechar pedido",
                 "path": "/fecharpedido"   
+            }
+        ]
+    },
+    {
+        "title": "Relatorios",
+        "childrens": [
+            {
+                "title": "Relatório Cozinha",
+                "path": "/relatoriocozinha"
             }
         ]
     }

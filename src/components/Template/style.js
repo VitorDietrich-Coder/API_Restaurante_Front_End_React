@@ -39,7 +39,6 @@ export const Content = styled.div`
   background-color: white;
   max-width: 100%;
   padding: 10px;
-
 `;
 
 export const Label = styled.label`

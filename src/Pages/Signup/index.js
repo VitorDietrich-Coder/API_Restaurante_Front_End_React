@@ -31,37 +31,69 @@ const Signup = () => {
       return;
     }
 
-    // Verifique se o CPF tem 11 dígitos
-    if (cpf.length !== 11) {
-      setError(true);
+    const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]{1,150}$/;
+    if (!nomeRegex.test(nome)) {
+      setError("Nome inválido");
       return;
     }
 
+    // Validar CPF
+    const cpfRegex = /^\d{1,11}$/;
+    if (!cpfRegex.test(cpf)) {
+      setError("CPF inválido");
+      return;
+    }
+
+    const telefoneRegex = /^\d{1,20}$/;
+    if (!telefoneRegex.test(telefone)) {
+      setError("Telefone inválido");
+      return;
+    }
+    // Validar CEP
+    const cepRegex = /^\d{1,8}$/;
+    if (!cepRegex.test(cep)) {
+      setError("CEP inválido");
+      return;
+    }
+
+
     try {
-      // Envie os dados para a API
-      const response = await axios.post('http://localhost:3000/auth/cadastrar/funcionario', {
-        nome,
-        cargo,
-        telefone,
-        email,
-        cpf,
-        senha,
-        endereco:
-        {
-         rua,
-         numero,
-         cidade,
-         estado,
-         cep,
-        }
+      const response = await fetch('http://localhost:3000/auth/cadastrar/funcionario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nome,
+          cargo,
+          telefone,
+          email,
+          cpf,
+          senha,
+          endereco: {
+            rua,
+            numero,
+            cidade,
+            estado,
+            cep,
+          }
+        }),
       });
   
-      alert('Usuário cadatrado com sucesso!', response);
+      if (!response.ok) {
+        // Captura e exibe o erro da API
+        const errorData = await response.json();
+        setError(errorData.message || 'Erro desconhecido');
+        console.error('Erro ao enviar dados:', errorData);
+        return;
+      }
+  
+      // Se chegou até aqui, os dados foram enviados com sucesso
+      alert('Usuário cadastrado com sucesso!');
       navigate("/");
-
     } catch (error) {
-      setError(error.message);
-      console.error('Erro ao enviar dados teste:', error);
+      setError('Erro desconhecido ao enviar dados');
+      console.error('Erro ao enviar dados:', error);
     }
   };
 
@@ -84,18 +116,6 @@ const Signup = () => {
             onChange={(e) => [setEmail(e.target.value), setError("")]}
           />
           <Input
-            type="password"
-            placeholder="Digite sua Senha"
-            value={senha}
-            onChange={(e) => [setSenha(e.target.value), setError("")]}
-          />
-          <Input
-            type="password"
-            placeholder="Confirme sua Senha"
-            value={senhaConf}
-            onChange={(e) => [setSenhaConf(e.target.value), setError("")]}
-          />
-          <Input
             placeholder="Digite seu cargo"
             value={cargo}
             onChange={(e) => [setCargo(e.target.value), setError("")]}
@@ -109,6 +129,12 @@ const Signup = () => {
             placeholder="Digite seu CPF"
             value={cpf}
             onChange={(e) => [setCpf(e.target.value), setError("")]}
+          />
+            <Input
+            type="password"
+            placeholder="Digite sua Senha"
+            value={senha}
+            onChange={(e) => [setSenha(e.target.value), setError("")]}
           />
         </C.LabelColumn>
         <C.LabelColumn>
@@ -136,6 +162,12 @@ const Signup = () => {
             placeholder="Digite seu CEP"
             value={cep}
             onChange={(e) => [setCep(e.target.value), setError("")]}
+          />
+                    <Input
+            type="password"
+            placeholder="Confirme sua Senha"
+            value={senhaConf}
+            onChange={(e) => [setSenhaConf(e.target.value), setError("")]}
           />
         </C.LabelColumn>
       </C.Content>

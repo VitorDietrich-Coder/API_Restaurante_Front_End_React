@@ -16,27 +16,36 @@ const Signin = () => {
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    if (!email | !senha) {
-      setError("Preencha todos os campos");
-      return;
-    }
-
     try {
-      // Envie os dados para a API
-      const response = await axios.post('http://localhost:3000/auth/login/funcionario', {
-        email,
-        senha,
+      const response = await fetch('http://localhost:3000/auth/login/funcionario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          senha,
+        }),
       });
-
-    const res = signin(response.data.token);
-
-    navigate("/home");
-
-  } catch (error) {
-    setError(true);
-    console.error('Erro ao enviar dados teste:', error);
-  }
-};
+  
+      if (!response.ok) {
+        // Captura e exibe o erro da API
+        const errorData = await response.json();
+        setError(errorData.message || 'Erro desconhecido');
+        console.error('Erro ao enviar dados:', errorData);
+        return;
+      }
+  
+      // Se chegou até aqui, os dados foram enviados com sucesso
+      const responseData = await response.json();
+      signin(responseData.token);
+      navigate("/home");
+    } catch (error) {
+      setError('Erro desconhecido ao enviar dados');
+      console.error('Erro ao enviar dados:', error);
+    }
+  };
+  
 
   return (
     <C.Container>

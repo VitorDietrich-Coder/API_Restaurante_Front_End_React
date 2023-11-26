@@ -6,23 +6,21 @@ import axios from "axios";
 import Sidebar from '../../components/Menu/Sidebar';
 import Footer from "../../components/Footer/footer.js";
 import * as C from "../../components/Template/style.js";
-import Grid from "../../components/formFornecedor/Grid";
-import Form from "../../components/formFornecedor/Form";
+import Grid from "../../components/gridRelatorioCozinha/Grid";
 import { toast } from "react-toastify";
 
 
-const CadastroFornecedor = () => {
+const RelatorioCozinha = () => {
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
   const [marca, setMarca] = useState("");
   const [quantidade, setQuantidade] = useState("");
-  const [fornecedores, setFornecedores] = useState([]);
+  const [produtos, setProdutos] = useState([]);
   const [onEdit, setOnEdit] = useState(null);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-
-  const getFornecedores = async () => {
+ 
+  const getProdutos = async () => {
     const userToken = localStorage.getItem("user_token");
     const hasUser =  JSON.parse(userToken).userToken;
     const headers = {
@@ -30,30 +28,29 @@ const CadastroFornecedor = () => {
     }
   
     try {
-      const res = await axios.get("http://localhost:3000/projects/listar-fornecedores", {headers});
-      setFornecedores(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
+      const res = await axios.get("http://localhost:3000/projects/relatorio-cozinha", {headers});
+      setProdutos(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
     } catch (error) {
       toast.error(error);
     }
   };
 
   useEffect(() => {
-    getFornecedores();
-  }, [setFornecedores]);
+    getProdutos();
+  }, [setProdutos]);
 
   return (
     <C.Main>
       <C.Container>
         <Sidebar />
         <C.Content>
-        <C.Label>Cadastrar fornecedor</C.Label>
+        <C.Label>Relatorio Cozinha</C.Label>
         <C.LabelError>{error}</C.LabelError>
-          <Form onEdit={onEdit} setOnEdit={setOnEdit} getUsers={getFornecedores} />     
-        <Grid setOnEdit={setOnEdit} users={fornecedores} setUsers={setFornecedores} />
+        <Grid setOnEdit={setOnEdit} users={produtos} setUsers={setProdutos} />
         </C.Content>
       </C.Container>
       <Footer />
     </C.Main>
   );
 };
-export default CadastroFornecedor;
+export default RelatorioCozinha;

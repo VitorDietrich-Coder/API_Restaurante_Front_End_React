@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,95 +6,50 @@ import axios from "axios";
 import Sidebar from '../../components/Menu/Sidebar';
 import Footer from "../../components/Footer/footer.js";
 import * as C from "../../components/Template/style.js";
+import Grid from "../../components/formProduto/Grid";
+import Form from "../../components/formProduto/Form";
+import { toast } from "react-toastify";
+
 
 const CadastroProduto = () => {
   const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [cpf_cnpj, setCpf] = useState("");
-  const [rua, setRua] = useState("");
-  const [numero, setNumero] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [estado, setEstado] = useState("");
-  const [cep, setCep] = useState("");
+  const [preco, setPreco] = useState("");
+  const [marca, setMarca] = useState("");
+  const [quantidade, setQuantidade] = useState("");
+  const [produtos, setProdutos] = useState([]);
+  const [onEdit, setOnEdit] = useState(null);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  const handleCadastrarProduto = async () => {
-    // ...
+ 
+  const getProdutos = async () => {
+    const userToken = localStorage.getItem("user_token");
+    const hasUser =  JSON.parse(userToken).userToken;
+    const headers = {
+      "Authorization": `Bearer ${hasUser}`,
+    }
+  
+    try {
+      const res = await axios.get("http://localhost:3000/projects/listar-produtos", {headers});
+      setProdutos(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
+    } catch (error) {
+      toast.error(error);
+    }
   };
+
+  useEffect(() => {
+    getProdutos();
+  }, [setProdutos]);
 
   return (
     <C.Main>
       <C.Container>
         <Sidebar />
         <C.Content>
-        <C.Label>Cadastrar Cliente</C.Label>
+        <C.Label>Cadastrar produto</C.Label>
         <C.LabelError>{error}</C.LabelError>
-          <div style={{ display: "flex" }}>
-            <div style={{ flex: 1, padding: "0 10px" }}>
-              <Input
-                type="nome"
-                placeholder="Digite seu nome"
-                value={nome}
-                onChange={(e) => [setNome(e.target.value), setError("")]}
-              />
-              <Input
-                type="email"
-                placeholder="Digite seu E-mail"
-                value={email}
-                onChange={(e) => [setEmail(e.target.value), setError("")]}
-              />
-              <Input
-                placeholder="Digite seu telefone"
-                value={telefone}
-                onChange={(e) => [setTelefone(e.target.value), setError("")]}
-              />
-              <Input
-                placeholder="Digite seu CPF"
-                value={cpf_cnpj}
-                onChange={(e) => [setCpf(e.target.value), setError("")]}
-              />
-            </div>
-            <div style={{ flex: 1, padding: "0 10px" }}>
-              <Input
-                placeholder="Digite sua Rua"
-                value={rua}
-                onChange={(e) => [setRua(e.target.value), setError("")]}
-              />
-              <Input
-                placeholder="Digite seu Número"
-                value={numero}
-                onChange={(e) => [setNumero(e.target.value), setError("")]}
-              />
-              <Input
-                placeholder="Digite sua Cidade"
-                value={cidade}
-                onChange={(e) => [setCidade(e.target.value), setError("")]}
-              />
-              <Input
-                placeholder="Digite seu Estado"
-                value={estado}
-                onChange={(e) => [setEstado(e.target.value), setError("")]}
-              />
-              <Input
-                placeholder="Digite seu CEP"
-                value={cep}
-                onChange={(e) => [setCep(e.target.value), setError("")]}
-              />
-            </div>
-          </div>
-          <C.ButtonColumn>
-          <Button Text="Inscrever-se" onClick={handleCadastrarProduto} />
-          <C.LabelSignup>
-            Já tem uma conta?
-            <C.Strong>
-              <Link to="/">&nbsp;Entre</Link>
-            </C.Strong>
-          </C.LabelSignup>
-        </C.ButtonColumn>
+          <Form onEdit={onEdit} setOnEdit={setOnEdit} getUsers={getProdutos} />     
+        <Grid setOnEdit={setOnEdit} users={produtos} setUsers={setProdutos} />
         </C.Content>
-
       </C.Container>
       <Footer />
     </C.Main>

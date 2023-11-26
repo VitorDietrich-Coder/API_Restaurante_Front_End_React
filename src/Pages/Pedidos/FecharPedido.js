@@ -6,8 +6,8 @@ import BuscarClientes from "../../components/Pedido/buscarClientes";
 import Carrinho from "../../components/Cart/carrinho.jsx";
 import * as C from "../../components/Template/style.js";
 import Button from "../../components/Button";
-import Form from "../../components/formPedido/Form";
-import BuscarFornecedor from "../../components/formPedido/BuscarFornecedor";
+import Form from "../../components/formPedido/formFecharPedido/Form";
+import BuscarFornecedor from "../../components/formPedido/formFecharPedido/BuscarFornecedor";
 import axios from "axios";
 import { toast } from "react-toastify";
 
