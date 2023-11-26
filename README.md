@@ -15,7 +15,7 @@
 <p align="left">
   🦄 Language: <strong> 
   
-  ![PHP](https://img.shields.io/badge/PHP-333333?style=flat&logo=php&logoColor=777BB4)
+  ![PHP](https://img.shields.io/badge/react-333333?style=flat&logo=react&logoColor=777BB4)
   </strong>
 </p>
 
